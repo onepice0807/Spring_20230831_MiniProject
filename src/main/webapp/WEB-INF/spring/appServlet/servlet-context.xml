@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- 어노테이션방식으로 처리한다. -->
+	<annotation-driven />
+	
+	<!-- 최대 파일 업로드 용량 설정 
+	ommonsMultipartResolver : 전송 단위 보다 큰용량의 파일 데이터가 부분으로 전송 되었을때 
+	다시 재조립해주는 객체
+	-->
+		<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="5242880"></beans:property>
+	</beans:bean>
+
+	<!-- /resources 폴더의 경로 매핑-->
+	<resources mapping="/resources/**" location="/resources/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<!-- Controller 단을 실행하고 response 처리 할때 반환될 view 객체를 찾는 객체 "WEB_INF/views/" + "home" + ".jsp"; -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<!-- 아래의 패키지를 스캔하여 객체를 확보하라 -->
+	<context:component-scan base-package="com.ray.controller" />
+	
+
+</beans:beans>
